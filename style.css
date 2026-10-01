@@ -1,0 +1,2847 @@
+/* Nota Generator - Monokrom & Plain White Design */
+
+:root {
+  --bg-page: #f7f7f7;
+  --bg-card: #ffffff;
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+  --border-light: #e5e5e5;
+  --border-medium: #cccccc;
+  --border-dark: #111111;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Courier New", Courier, monospace;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --radius: 4px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.5;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* App Layout: Split Screen */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Panel Kiri: Form Editor */
+.editor-panel {
+  width: 480px;
+  min-width: 420px;
+  background-color: var(--bg-card);
+  border-right: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+}
+
+.editor-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.app-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.app-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.form-section {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.section-title-row h2 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+}
+
+.label-row label {
+  margin-bottom: 0;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text-primary);
+  background-color: #ffffff;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus {
+  border-color: var(--border-dark);
+}
+
+/* Tabel Input Barang di Editor */
+.items-table-container {
+  overflow-x: auto;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+}
+
+.items-editor-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.items-editor-table th {
+  background-color: #fafafa;
+  padding: 8px 10px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.items-editor-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.items-editor-table tr:last-child td {
+  border-bottom: none;
+}
+
+.items-editor-table input {
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+.btn-delete-row {
+  background: none;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  padding: 4px 8px;
+  font-size: 11px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-delete-row:hover {
+  background-color: #111111;
+  color: #ffffff;
+  border-color: #111111;
+}
+
+/* Summary Box di Form */
+.editor-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background-color: #fafafa;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+}
+
+.summary-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.summary-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Tombol Footer Form */
+.editor-footer {
+  padding: 16px 24px;
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+  background-color: #ffffff;
+  border-top: 1px solid var(--border-light);
+}
+
+/* Tombol-tombol Standar */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 11px;
+}
+
+.btn-xs {
+  padding: 3px 8px;
+  font-size: 10px;
+}
+
+.btn-primary {
+  background-color: var(--text-primary);
+  color: #ffffff;
+  border: 1px solid var(--text-primary);
+}
+
+.btn-primary:hover {
+  background-color: #333333;
+  border-color: #333333;
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+}
+
+.btn-secondary:hover {
+  background-color: #f3f3f3;
+  border-color: var(--border-dark);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-dark);
+}
+
+.btn-outline:hover {
+  background-color: var(--text-primary);
+  color: #ffffff;
+}
+
+/* Panel Kanan: Live Preview */
+.preview-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-page);
+  min-height: 100vh;
+}
+
+/* Toolbar Preview */
+.preview-toolbar {
+  padding: 14px 28px;
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.template-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.selector-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.template-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tpl-btn {
+  background-color: #ffffff;
+  border: 1px solid var(--border-medium);
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tpl-btn:hover {
+  border-color: var(--border-dark);
+  color: var(--text-primary);
+}
+
+.tpl-btn.active {
+  background-color: var(--text-primary);
+  color: #ffffff;
+  border-color: var(--text-primary);
+}
+
+.btn-print {
+  padding: 8px 16px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+/* Paper Stage */
+.paper-stage {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 36px 20px;
+  overflow-y: auto;
+}
+
+.receipt-paper {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  padding: 36px;
+  width: 100%;
+  max-width: 680px;
+  min-height: 500px;
+  color: var(--text-primary);
+  transition: max-width 0.2s ease;
+}
+
+/* Alignment & Utility Classes */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.font-bold { font-weight: 700; }
+.font-medium { font-weight: 500; }
+
+/* =======================================================
+   STYLING 7 TEMPLATE NOTA (100% MONOKROM & PLAIN WHITE)
+======================================================= */
+
+/* -------------------------------------------------------
+   Template 1: Struk Termal Kasir (Narrow Monospace)
+------------------------------------------------------- */
+.tpl-thermal {
+  max-width: 320px;
+  margin: 0 auto;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.4;
+  color: #000000;
+}
+
+.thermal-store {
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.thermal-divider-dashed {
+  border-top: 1px dashed #444444;
+  margin: 8px 0;
+}
+
+.thermal-meta {
+  font-size: 11px;
+}
+
+.thermal-items {
+  margin: 10px 0;
+}
+
+.thermal-item-row {
+  margin-bottom: 6px;
+}
+
+.thermal-item-name {
+  font-weight: 600;
+}
+
+.thermal-item-calc {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.thermal-total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.thermal-footer {
+  text-align: center;
+  font-size: 10px;
+  margin-top: 14px;
+  letter-spacing: 0.05em;
+}
+
+/* -------------------------------------------------------
+   Template 2: Faktur Toko Klasik (Boxed Grid)
+------------------------------------------------------- */
+.tpl-classic {
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+
+.classic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #111111;
+  padding-bottom: 12px;
+}
+
+.classic-store-name {
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.classic-tagline {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+.classic-meta-table {
+  font-size: 12px;
+  border-collapse: collapse;
+}
+
+.classic-meta-table td {
+  padding: 2px 4px;
+}
+
+.classic-grid-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.classic-grid-table th,
+.classic-grid-table td {
+  border: 1px solid #111111;
+  padding: 8px 10px;
+}
+
+.classic-grid-table th {
+  background-color: #f7f7f7;
+  font-weight: 700;
+  font-size: 11px;
+  text-align: left;
+}
+
+.classic-grid-table tfoot td {
+  font-size: 13px;
+  background-color: #fafafa;
+}
+
+.classic-signatures {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 36px;
+  font-size: 12px;
+}
+
+.sig-box {
+  width: 180px;
+}
+
+.sig-space {
+  height: 48px;
+}
+
+/* -------------------------------------------------------
+   Template 3: Modern Clean (Minimalist Borderless)
+------------------------------------------------------- */
+.tpl-modern {
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+
+.modern-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.modern-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.modern-kicker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.modern-store {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.modern-meta {
+  display: flex;
+  gap: 24px;
+}
+
+.modern-meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.modern-meta-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.modern-meta-val {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.modern-table th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  border-bottom: 1px solid #111111;
+  padding: 10px 0;
+  font-weight: 600;
+  text-align: left;
+}
+
+.modern-table td {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.modern-item-name {
+  font-weight: 500;
+}
+
+.modern-summary {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.modern-total-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.modern-total-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.modern-total-amount {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.modern-footer {
+  margin-top: 40px;
+  font-size: 11px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-light);
+  padding-top: 14px;
+}
+
+/* -------------------------------------------------------
+   Template 4: Formal Bisnis (Corporate Two-Column)
+------------------------------------------------------- */
+.tpl-formal {
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+
+.formal-header-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-medium);
+}
+
+.formal-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.formal-store-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 4px 0 2px 0;
+}
+
+.formal-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.formal-info-card {
+  background-color: #fafafa;
+  border: 1px solid var(--border-light);
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-size: 12px;
+}
+
+.formal-card-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 4px;
+}
+
+.formal-card-line:last-child {
+  margin-bottom: 0;
+}
+
+.formal-info-label {
+  color: var(--text-secondary);
+}
+
+.formal-info-val {
+  font-weight: 600;
+}
+
+.formal-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.formal-table th {
+  background-color: #f2f2f2;
+  border: 1px solid var(--border-medium);
+  padding: 8px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.formal-table td {
+  border: 1px solid var(--border-light);
+  padding: 8px 10px;
+}
+
+.formal-bottom-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.formal-note-col {
+  flex: 1;
+  font-size: 11px;
+  color: var(--text-secondary);
+  border: 1px dashed var(--border-medium);
+  padding: 10px 12px;
+  border-radius: var(--radius);
+}
+
+.formal-note-title {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.formal-total-col {
+  width: 240px;
+}
+
+.formal-total-box {
+  background-color: #fafafa;
+  border: 1px solid var(--border-medium);
+  padding: 12px 14px;
+  border-radius: var(--radius);
+}
+
+.formal-total-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.formal-total-val {
+  font-size: 16px;
+}
+
+/* -------------------------------------------------------
+   Template 5: Compact Slip (A6 / Bon Ringkas)
+------------------------------------------------------- */
+.tpl-slip {
+  max-width: 420px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  padding: 10px;
+}
+
+.slip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.slip-store {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.slip-meta {
+  font-size: 11px;
+  color: var(--text-secondary);
+  display: flex;
+  gap: 10px;
+}
+
+.slip-divider {
+  border-top: 1px solid #111111;
+  margin: 8px 0;
+}
+
+.slip-table-head {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.slip-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
+  padding: 4px 0;
+  border-bottom: 1px dotted var(--border-light);
+  font-size: 11px;
+}
+
+.slip-subtotal {
+  text-align: right;
+  font-weight: 600;
+}
+
+.slip-total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 4px 0;
+}
+
+.slip-footer {
+  text-align: center;
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 12px;
+}
+
+/* -------------------------------------------------------
+   Template 6: Dot Matrix Vintage (Continuous Form Style)
+------------------------------------------------------- */
+.tpl-dotmatrix {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.35;
+  color: #000000;
+}
+
+.dotmatrix-header {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.dotmatrix-store {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.dotmatrix-title {
+  font-size: 11px;
+  margin: 2px 0 4px 0;
+}
+
+.dotmatrix-meta {
+  display: flex;
+  justify-content: space-around;
+  font-size: 11px;
+}
+
+.dotmatrix-line {
+  white-space: pre;
+  overflow: hidden;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  color: #222222;
+  user-select: none;
+}
+
+.dotmatrix-head-row,
+.dotmatrix-row {
+  display: grid;
+  grid-template-columns: 35px 1fr 50px 110px 110px;
+  padding: 2px 0;
+}
+
+.dotmatrix-head-row {
+  font-weight: 700;
+}
+
+.dm-col-no { text-align: center; }
+.dm-col-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dm-col-qty { text-align: center; }
+.dm-col-price { text-align: right; }
+.dm-col-subtotal { text-align: right; font-weight: 700; }
+
+.dotmatrix-total-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 4px 0;
+}
+
+.dotmatrix-footer {
+  text-align: center;
+  font-size: 10px;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+/* -------------------------------------------------------
+   Template 7: Bold Editorial (High Contrast Monochrome)
+------------------------------------------------------- */
+.tpl-bold {
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+
+.editorial-tag {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.editorial-store-name {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  margin: 4px 0 10px 0;
+}
+
+.editorial-thick-bar {
+  height: 3px;
+  background-color: #111111;
+  margin: 12px 0;
+}
+
+.editorial-thin-bar {
+  height: 1px;
+  background-color: #111111;
+  margin: 12px 0;
+}
+
+.editorial-meta-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.editorial-muted {
+  color: var(--text-muted);
+}
+
+.editorial-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+
+.editorial-table th {
+  border-bottom: 2px solid #111111;
+  padding: 8px 0;
+  font-size: 11px;
+  font-weight: 800;
+  text-align: left;
+  letter-spacing: 0.05em;
+}
+
+.editorial-table td {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.editorial-idx {
+  font-weight: 800;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.editorial-name {
+  font-weight: 600;
+}
+
+.editorial-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 4px 0;
+}
+
+.editorial-total-label {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.editorial-total-num {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.editorial-footer {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-top: 16px;
+}
+
+/* -------------------------------------------------------
+   Template 8: Vertikal Slim (Tall & Slim Portrait - Spaced)
+------------------------------------------------------- */
+.tpl-vertical {
+  max-width: 360px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  padding: 24px 0;
+}
+
+.vertical-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.brand-logo-circle {
+  width: 44px;
+  height: 44px;
+  border: 2px solid;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 auto 12px auto;
+}
+
+.vertical-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: 1px solid #111111;
+  display: inline-block;
+  padding: 3px 10px;
+  margin-bottom: 14px;
+}
+
+.vertical-store {
+  font-size: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-bottom: 18px;
+  line-height: 1.3;
+}
+
+.vertical-meta-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 11px;
+  text-align: left;
+  background-color: #fafafa;
+  border: 1px solid var(--border-light);
+  padding: 12px 16px;
+  border-radius: var(--radius);
+}
+
+.vertical-meta-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.vertical-meta-key {
+  color: var(--text-muted);
+}
+
+.vertical-meta-val {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.vertical-divider {
+  border-top: 1px solid #111111;
+  margin: 24px 0;
+}
+
+.vertical-section-heading {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.vertical-items-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.vertical-item-block {
+  padding: 14px 0;
+  border-bottom: 1px dotted var(--border-medium);
+}
+
+.vertical-item-block:last-child {
+  border-bottom: none;
+}
+
+.vertical-item-title {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 6px;
+  line-height: 1.35;
+}
+
+.vertical-item-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 12px;
+}
+
+.vertical-item-calc {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.vertical-item-subtotal {
+  font-weight: 700;
+}
+
+.vertical-total-card {
+  border: 2px solid #111111;
+  padding: 18px 14px;
+  text-align: center;
+  margin: 20px 0 12px 0;
+  background-color: #fafafa;
+}
+
+.vertical-total-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.vertical-total-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: #111111;
+}
+
+.vertical-footer {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.vertical-footer-text {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.vertical-footer-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* -------------------------------------------------------
+   Template 9: Vertikal Tall Minimalist (Ultra Airy Portrait)
+------------------------------------------------------- */
+.tpl-vertical-tall {
+  max-width: 350px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  padding: 28px 0;
+}
+
+.tall-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.brand-logo-tall {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tall-kicker {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.tall-store-title {
+  font-size: 22px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+  line-height: 1.3;
+}
+
+.tall-meta-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: center;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  padding: 18px 0;
+}
+
+.tall-meta-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tall-meta-label {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.tall-meta-val {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.tall-line-separator {
+  border-top: 1px solid #111111;
+  margin: 28px 0;
+}
+
+.tall-section-title {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.tall-items-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.tall-item-card {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tall-item-card:last-child {
+  border-bottom: none;
+}
+
+.tall-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.tall-item-subline {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.tall-total-section {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.tall-total-line {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.tall-total-caption {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: var(--text-secondary);
+}
+
+.tall-total-number {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.tall-payment-status {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.tall-footer {
+  text-align: center;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+}
+
+.tall-footer-main {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.tall-footer-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* -------------------------------------------------------
+   Template 10: Vertikal Long Ticket (Spacious Ticket Voucher)
+------------------------------------------------------- */
+.tpl-vertical-ticket {
+  max-width: 340px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  padding: 24px 18px;
+  border: 1px solid #111111;
+  background-color: #ffffff;
+}
+
+.ticket-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.ticket-stub-number {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  background-color: #111111;
+  color: #ffffff;
+  display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: 14px;
+}
+
+.ticket-store {
+  font-size: 18px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.ticket-date-bar {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.ticket-dashed-divider {
+  border-top: 1px dashed #111111;
+  margin: 22px 0;
+}
+
+.ticket-label-muted {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.ticket-items-flow {
+  display: flex;
+  flex-direction: column;
+}
+
+.ticket-item-row {
+  padding: 12px 0;
+  border-bottom: 1px dotted var(--border-medium);
+}
+
+.ticket-item-row:last-child {
+  border-bottom: none;
+}
+
+.ticket-item-top {
+  display: flex;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.ticket-item-num {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.ticket-item-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.ticket-item-total {
+  font-weight: 700;
+  color: #111111;
+}
+
+.ticket-summary-box {
+  text-align: center;
+  padding: 16px 0;
+}
+
+.ticket-sum-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.ticket-sum-amount {
+  font-size: 24px;
+  font-weight: 800;
+  color: #111111;
+}
+
+.ticket-footer {
+  text-align: center;
+  margin-top: 6px;
+}
+
+.ticket-barcode-sim {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-bottom: 10px;
+  user-select: none;
+  font-weight: 700;
+}
+
+.ticket-footer-msg {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+/* -------------------------------------------------------
+   Template 11: Vertikal Elegant Serif
+------------------------------------------------------- */
+.tpl-vertical-serif {
+  max-width: 360px;
+  margin: 0 auto;
+  font-family: var(--font-serif);
+  font-size: 13px;
+  padding: 24px 0;
+}
+
+.serif-double-line {
+  border-top: 3px double #111111;
+  margin: 16px 0;
+}
+
+.serif-header {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.serif-kicker {
+  font-size: 10px;
+  font-style: italic;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+
+.serif-store-title {
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.serif-meta-centered {
+  font-size: 11px;
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.serif-dot {
+  color: var(--text-muted);
+}
+
+.serif-items-area {
+  padding: 6px 0;
+}
+
+.serif-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.serif-items-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.serif-item-row {
+  padding: 12px 0;
+  border-bottom: 1px dotted var(--border-medium);
+}
+
+.serif-item-row:last-child {
+  border-bottom: none;
+}
+
+.serif-item-title {
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.serif-item-sub {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.serif-item-subtotal {
+  font-weight: 700;
+  color: #111111;
+}
+
+.serif-total-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+}
+
+.serif-total-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.serif-total-num {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.serif-footer {
+  text-align: center;
+  font-style: italic;
+  font-size: 11px;
+  margin-top: 14px;
+  color: var(--text-secondary);
+}
+
+/* -------------------------------------------------------
+   Template 12: Vertikal Continuous Bon
+------------------------------------------------------- */
+.tpl-vertical-bon {
+  max-width: 350px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  padding: 24px 0;
+}
+
+.bon-header {
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.bon-tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.bon-store {
+  font-size: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 10px;
+}
+
+.bon-line-thin {
+  border-top: 1px solid #111111;
+  margin: 10px 0;
+}
+
+.bon-meta-rows {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.bon-dashed-line {
+  border-top: 1px dashed var(--border-medium);
+  margin: 20px 0;
+}
+
+.bon-heading {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.bon-item-block {
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--border-light);
+}
+
+.bon-item-block:last-child {
+  border-bottom: none;
+}
+
+.bon-item-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.bon-item-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.bon-item-total {
+  font-weight: 700;
+  color: #111111;
+}
+
+.bon-total-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 14px 0;
+  border-top: 2px solid #111111;
+  border-bottom: 2px solid #111111;
+}
+
+.bon-total-title {
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+
+.bon-total-amount {
+  font-weight: 800;
+  font-size: 22px;
+}
+
+.bon-footer {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  margin-top: 20px;
+  color: var(--text-muted);
+}
+
+/* -------------------------------------------------------
+   Template 13: Vertikal Bordered Card
+------------------------------------------------------- */
+.tpl-vertical-card {
+  max-width: 360px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+
+.card-inner-frame {
+  border: 1px solid #111111;
+  padding: 22px 18px;
+  background-color: #ffffff;
+}
+
+.card-header-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  letter-spacing: 0.1em;
+}
+
+.card-store-name {
+  font-size: 19px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.card-no {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.card-separator {
+  border-top: 1px solid #111111;
+  margin: 18px 0;
+}
+
+.card-section-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.card-items-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-item-row {
+  display: flex;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.card-item-row:last-child {
+  border-bottom: none;
+}
+
+.card-item-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  width: 18px;
+}
+
+.card-item-content {
+  flex: 1;
+}
+
+.card-item-title {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+.card-item-calc {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.card-item-sub {
+  font-weight: 700;
+  color: #111111;
+}
+
+.card-total-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 14px 12px;
+  background-color: #fafafa;
+  border: 1px solid var(--border-medium);
+  margin-top: 6px;
+}
+
+.card-total-text {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.card-total-val {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.card-footer {
+  text-align: center;
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 16px;
+}
+
+/* -------------------------------------------------------
+   Template 14: Vertikal Modern Minimal
+------------------------------------------------------- */
+.tpl-vertical-minimal {
+  max-width: 340px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  padding: 28px 0;
+  text-align: center;
+}
+
+.vminimal-tag {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.vminimal-store {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.vminimal-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.vminimal-divider {
+  border-top: 1px solid var(--border-light);
+  margin: 22px 0;
+}
+
+.vminimal-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.vminimal-item {
+  padding: 12px 0;
+  border-bottom: 1px dotted var(--border-light);
+}
+
+.vminimal-item:last-child {
+  border-bottom: none;
+}
+
+.vminimal-item-name {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+.vminimal-item-qty {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+}
+
+.vminimal-item-subtotal {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.vminimal-total {
+  padding: 14px 0;
+}
+
+.vminimal-total-title {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.vminimal-total-num {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.vminimal-footer {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 20px;
+}
+
+/* -------------------------------------------------------
+   Template 15: Vertikal Café & Bistro Order Slip
+------------------------------------------------------- */
+.tpl-vertical-cafe {
+  max-width: 360px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  padding: 24px 0;
+}
+
+.cafe-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.cafe-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  border: 1px solid #111111;
+  display: inline-block;
+  padding: 2px 8px;
+  margin-bottom: 10px;
+}
+
+.cafe-store {
+  font-size: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.cafe-meta-pill {
+  font-size: 11px;
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.cafe-meta-sep {
+  font-size: 12px;
+}
+
+.cafe-divider-double {
+  border-top: 3px double #111111;
+  margin: 18px 0;
+}
+
+.cafe-divider-dashed {
+  border-top: 1px dashed #444444;
+  margin: 18px 0;
+}
+
+.cafe-section-title {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.cafe-item-row {
+  padding: 10px 0;
+  border-bottom: 1px dotted var(--border-medium);
+}
+
+.cafe-item-row:last-child {
+  border-bottom: none;
+}
+
+.cafe-item-main {
+  display: flex;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.cafe-item-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-secondary);
+  padding-left: 18px;
+}
+
+.cafe-item-subtotal {
+  font-weight: 700;
+  color: #111111;
+}
+
+.cafe-total-box {
+  padding: 8px 0;
+  text-align: center;
+}
+
+.cafe-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.cafe-total-val {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.cafe-status-sub {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.cafe-footer {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 14px;
+}
+
+.cafe-footer-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: normal;
+  margin-top: 4px;
+}
+
+/* -------------------------------------------------------
+   Template 16: Vertikal Label Tag / Price Ticket
+------------------------------------------------------- */
+.tpl-vertical-tag {
+  max-width: 370px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  padding: 12px 0;
+}
+
+.tag-cut-line {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+
+.tag-card-box {
+  border: 2px solid #111111;
+  padding: 24px 20px;
+  background-color: #ffffff;
+}
+
+.tag-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.tag-kicker {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.tag-store {
+  font-size: 19px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.tag-meta-grid {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  background: #fafafa;
+  border: 1px solid var(--border-light);
+  padding: 8px 12px;
+}
+
+.tag-lbl {
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.tag-solid-line {
+  border-top: 2px solid #111111;
+  margin: 16px 0;
+}
+
+.tag-section-heading {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.tag-item-row {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.tag-item-row:last-child {
+  border-bottom: none;
+}
+
+.tag-item-badge {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.tag-item-info {
+  flex: 1;
+}
+
+.tag-item-title {
+  font-weight: 600;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.tag-item-pricing {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.tag-item-subtotal {
+  font-weight: 700;
+  color: #111111;
+}
+
+.tag-total-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+}
+
+.tag-total-label {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.tag-total-price {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.tag-footer {
+  text-align: center;
+  margin-top: 14px;
+  border-top: 1px dotted #cccccc;
+  padding-top: 12px;
+}
+
+.tag-barcode-mock {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.25em;
+  margin-bottom: 6px;
+}
+
+.tag-guarantee {
+  font-size: 9px;
+  color: var(--text-muted);
+}
+
+/* -------------------------------------------------------
+   Template 17: Vertikal Retro Tape (Vintage Register Tape)
+------------------------------------------------------- */
+.tpl-vertical-retro {
+  max-width: 340px;
+  margin: 0 auto;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.4;
+  color: #000000;
+  padding: 18px 0;
+}
+
+.retro-star-line {
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  margin: 8px 0;
+}
+
+.retro-header {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.retro-store {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.retro-title {
+  font-size: 11px;
+  margin: 4px 0;
+}
+
+.retro-meta {
+  font-size: 10px;
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.retro-items-area {
+  margin: 12px 0;
+}
+
+.retro-item-entry {
+  margin-bottom: 8px;
+}
+
+.retro-item-line {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.retro-item-leader {
+  flex: 1;
+  overflow: hidden;
+  margin: 0 4px;
+  color: #888888;
+  white-space: nowrap;
+}
+
+.retro-item-calc {
+  font-size: 10px;
+  color: #444444;
+  margin-top: 2px;
+}
+
+.retro-double-line {
+  text-align: center;
+  font-size: 11px;
+  margin: 8px 0;
+  letter-spacing: -0.05em;
+}
+
+.retro-total-block {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 6px 0;
+}
+
+.retro-total-val {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.retro-stamp-box {
+  text-align: center;
+  font-weight: 700;
+  font-size: 12px;
+  margin: 12px 0;
+  letter-spacing: 0.1em;
+}
+
+.retro-footer {
+  text-align: center;
+  font-size: 10px;
+  margin-top: 10px;
+}
+
+/* -------------------------------------------------------
+   Template 18: Vertikal Luxury / High-End Boutique
+------------------------------------------------------- */
+.tpl-vertical-luxury {
+  max-width: 360px;
+  margin: 0 auto;
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: #111111;
+  padding: 32px 0;
+}
+
+.luxury-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.luxury-kicker {
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #777777;
+  margin-bottom: 10px;
+}
+
+.luxury-brand {
+  font-size: 22px;
+  font-weight: normal;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.luxury-meta-line {
+  font-size: 11px;
+  color: #666666;
+  font-style: italic;
+}
+
+.luxury-bullet {
+  margin: 0 8px;
+}
+
+.luxury-thin-line {
+  border-top: 1px solid #cccccc;
+  margin: 24px 0;
+}
+
+.luxury-section-heading {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #777777;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.luxury-item-row {
+  padding: 14px 0;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.luxury-item-row:last-child {
+  border-bottom: none;
+}
+
+.luxury-item-header {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: normal;
+  margin-bottom: 6px;
+}
+
+.luxury-item-index {
+  color: #888888;
+  font-style: italic;
+  font-size: 12px;
+}
+
+.luxury-item-pricing {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #666666;
+  padding-left: 20px;
+}
+
+.luxury-item-amount {
+  font-weight: 600;
+  color: #111111;
+  font-family: var(--font-sans);
+}
+
+.luxury-total-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+}
+
+.luxury-total-label {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #555555;
+}
+
+.luxury-total-val {
+  font-size: 22px;
+  font-weight: bold;
+  font-family: var(--font-sans);
+}
+
+.luxury-footer {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 12px;
+  font-style: italic;
+  color: #666666;
+}
+
+.luxury-terms {
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  font-style: normal;
+  color: #999999;
+  margin-top: 6px;
+}
+
+/* -------------------------------------------------------
+   Template 19: Vertikal Buku Kas / Bukti Penerimaan Kas
+------------------------------------------------------- */
+.tpl-vertical-kas {
+  max-width: 480px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: #111111;
+  padding: 20px 0;
+}
+
+.kas-header {
+  margin-bottom: 18px;
+}
+
+.kas-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  border: 1px solid #111111;
+  display: inline-block;
+  padding: 3px 8px;
+  margin-bottom: 8px;
+}
+
+.kas-store {
+  font-size: 18px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.kas-meta-grid {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  border-top: 1px solid #111111;
+  border-bottom: 1px solid #111111;
+  padding: 8px 0;
+}
+
+.kas-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+  font-size: 11px;
+}
+
+.kas-table th {
+  border: 1px solid #111111;
+  background-color: #f5f5f5;
+  padding: 6px 8px;
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.kas-table td {
+  border: 1px solid #cccccc;
+  padding: 6px 8px;
+}
+
+.kas-row:nth-child(even) td {
+  background-color: #fafafa;
+}
+
+.kas-total-row td {
+  border: 1px solid #111111;
+  border-bottom: 3px double #111111;
+  font-weight: 700;
+  padding: 8px;
+  background-color: #f9f9f9;
+}
+
+.kas-total-label {
+  font-size: 11px;
+}
+
+.kas-total-value {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.kas-signatures {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+}
+
+.kas-sig-box {
+  width: 45%;
+  text-align: center;
+}
+
+.kas-sig-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #444444;
+}
+
+.kas-sig-space {
+  height: 44px;
+}
+
+.kas-sig-line {
+  font-size: 11px;
+  color: #222222;
+}
+
+/* -------------------------------------------------------
+   Template 20: Vertikal Modern Rounded Pill
+------------------------------------------------------- */
+.tpl-vertical-pill {
+  max-width: 360px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  padding: 12px 0;
+}
+
+.pill-card-frame {
+  border: 1px solid #111111;
+  border-radius: 8px;
+  padding: 24px 20px;
+  background: #ffffff;
+}
+
+.pill-header {
+  margin-bottom: 18px;
+}
+
+.pill-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.pill-badge {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #555555;
+}
+
+.pill-status-badge {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  background: #111111;
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.pill-store-name {
+  font-size: 19px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.pill-meta-box {
+  display: flex;
+  justify-content: space-between;
+  background: #f7f7f7;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+
+.pill-meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pill-meta-lbl {
+  font-size: 9px;
+  font-weight: 700;
+  color: #888888;
+  letter-spacing: 0.1em;
+}
+
+.pill-meta-txt {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111111;
+}
+
+.pill-section-heading {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: #888888;
+  margin: 18px 0 12px 0;
+}
+
+.pill-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pill-item-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: #fafafa;
+}
+
+.pill-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.pill-item-index {
+  font-size: 10px;
+  color: #888888;
+  margin-right: 6px;
+}
+
+.pill-item-name {
+  flex: 1;
+}
+
+.pill-item-subtotal {
+  font-weight: 800;
+  color: #111111;
+}
+
+.pill-item-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #666666;
+}
+
+.pill-summary-box {
+  margin-top: 18px;
+  border-top: 2px solid #111111;
+  padding-top: 12px;
+}
+
+.pill-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.pill-summary-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.pill-summary-total {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.pill-footer {
+  text-align: center;
+  margin-top: 20px;
+  border-top: 1px dotted #cccccc;
+  padding-top: 14px;
+}
+
+.pill-barcode {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  margin-bottom: 6px;
+}
+
+.pill-footer-text {
+  font-size: 10px;
+  color: #777777;
+}
+
+/* =======================================================
+   PRINT STYLES (@media print)
+======================================================= */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-size: 12pt;
+  }
+
+  .no-print,
+  .editor-panel,
+  .preview-toolbar {
+    display: none !important;
+  }
+
+  .app-layout {
+    display: block !important;
+  }
+
+  .preview-panel {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .paper-stage {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  .receipt-paper {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+  }
+
+  /* Cegah pemotongan tabel di tengah baris */
+  tr, .thermal-item-row, .slip-row, .dotmatrix-row, .vertical-item-block, .tall-item-card, .ticket-item-row, .serif-item-row, .bon-item-block, .card-item-row, .vminimal-item, .cafe-item-row, .tag-item-row, .retro-item-entry, .luxury-item-row, .kas-row, .pill-item-card {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  @page {
+    margin: 12mm;
+    size: auto;
+  }
+}
+
+/* Responsivitas pada Layar Kecil */
+@media screen and (max-width: 900px) {
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .editor-panel {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    position: static;
+  }
+
+  .preview-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .template-buttons {
+    justify-content: flex-start;
+  }
+}

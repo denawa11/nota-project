@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nota Generator - Pembuat Nota & Faktur Simpel</title>
+  <link rel="stylesheet" href="style.css?v=6">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Panel Kiri: Form Editor -->
+    <aside class="editor-panel no-print" id="editorPanel">
+      <header class="editor-header">
+        <h1 class="app-title">Nota Generator</h1>
+        <p class="app-subtitle">Pembuat nota monokrom lokal & siap cetak</p>
+      </header>
+
+      <section class="form-section">
+        <div class="form-group">
+          <label for="storeNameInput">Nama Toko / Usaha</label>
+          <input type="text" id="storeNameInput" placeholder="Contoh: TOKO MAKMUR SEJAHTERA" autocomplete="off">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="receiptNoInput">No. Nota / Faktur</label>
+            <input type="text" id="receiptNoInput" placeholder="NOTA-1001" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="dateInput">Tanggal Transaksi</label>
+            <input type="date" id="dateInput">
+          </div>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <div class="section-title-row">
+          <h2>Daftar Barang</h2>
+          <button type="button" class="btn btn-sm btn-outline" id="addItemBtn">+ Tambah Barang</button>
+        </div>
+
+        <div class="items-table-container">
+          <table class="items-editor-table">
+            <thead>
+              <tr>
+                <th style="width: 42%;">Nama Barang</th>
+                <th style="width: 16%;">Qty</th>
+                <th style="width: 28%;">Harga (Rp)</th>
+                <th style="width: 14%; text-align: center;">Hapus</th>
+              </tr>
+            </thead>
+            <tbody id="itemsTableBody">
+              <!-- Baris barang dirender via JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="editor-summary">
+          <span class="summary-label">Total Keseluruhan</span>
+          <span class="summary-value" id="formTotalDisplay">Rp 0</span>
+        </div>
+      </section>
+
+      <footer class="editor-footer">
+        <button type="button" class="btn btn-secondary" id="loadSampleBtn">Isi Contoh Data</button>
+        <button type="button" class="btn btn-secondary" id="resetBtn">Reset Form</button>
+      </footer>
+    </aside>
+
+    <!-- Panel Kanan: Live Preview & Switcher -->
+    <main class="preview-panel" id="previewPanel">
+      <div class="preview-toolbar no-print">
+        <div class="template-selector">
+          <span class="selector-label">Pilihan Desain:</span>
+          <div class="template-buttons" id="templateButtons">
+            <button type="button" class="tpl-btn active" data-template="1">1. Termal Kasir</button>
+            <button type="button" class="tpl-btn" data-template="2">2. Faktur Klasik</button>
+            <button type="button" class="tpl-btn" data-template="3">3. Modern Clean</button>
+            <button type="button" class="tpl-btn" data-template="4">4. Formal Bisnis</button>
+            <button type="button" class="tpl-btn" data-template="5">5. Compact Slip</button>
+            <button type="button" class="tpl-btn" data-template="6">6. Dot Matrix</button>
+            <button type="button" class="tpl-btn" data-template="7">7. Bold Editorial</button>
+            <button type="button" class="tpl-btn" data-template="8">8. Vertikal Slim</button>
+            <button type="button" class="tpl-btn" data-template="9">9. Vertikal Tall</button>
+            <button type="button" class="tpl-btn" data-template="10">10. Vertikal Tiket</button>
+            <button type="button" class="tpl-btn" data-template="11">11. Vertikal Serif</button>
+            <button type="button" class="tpl-btn" data-template="12">12. Vertikal Bon</button>
+            <button type="button" class="tpl-btn" data-template="13">13. Vertikal Card</button>
+            <button type="button" class="tpl-btn" data-template="14">14. Vertikal Minimal</button>
+            <button type="button" class="tpl-btn" data-template="15">15. Vertikal Café</button>
+            <button type="button" class="tpl-btn" data-template="16">16. Vertikal Tag</button>
+            <button type="button" class="tpl-btn" data-template="17">17. Vertikal Retro</button>
+            <button type="button" class="tpl-btn" data-template="18">18. Vertikal Luxury</button>
+            <button type="button" class="tpl-btn" data-template="19">19. Vertikal Buku Kas</button>
+            <button type="button" class="tpl-btn" data-template="20">20. Vertikal Modern Pill</button>
+          </div>
+        </div>
+
+        <div class="preview-actions">
+          <button type="button" class="btn btn-secondary btn-download" id="downloadPngBtn">Download PNG</button>
+          <button type="button" class="btn btn-primary btn-print" id="printBtn">Cetak / PDF</button>
+        </div>
+      </div>
+
+      <div class="paper-stage">
+        <div class="receipt-paper" id="receiptPaper">
+          <!-- Konten nota dirender secara dinamis di sini -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="html2canvas.min.js"></script>
+  <script src="app.js?v=6"></script>
+</body>
+</html>

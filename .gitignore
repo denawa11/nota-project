@@ -1,0 +1,12 @@
+node_modules/
+verify-downloads/
+verify-multi-downloads/
+verify-new-downloads/
+debug-result.png
+iframe-result.png
+verified-output.png
+tpl-*.png
+verify-tpl-*.png
+NOTA_*.png
+.DS_Store
+Thumbs.db
