@@ -68,6 +68,38 @@ body {
   margin-top: 2px;
 }
 
+/* Mode Tab Switcher */
+.mode-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-light);
+  background: #f9f9f9;
+}
+
+.mode-tab {
+  flex: 1;
+  padding: 11px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+  letter-spacing: 0.02em;
+}
+
+.mode-tab:hover {
+  color: var(--text-primary);
+  background: #f0f0f0;
+}
+
+.mode-tab.active {
+  color: var(--text-primary);
+  border-bottom-color: var(--text-primary);
+  background: #ffffff;
+}
+
 .form-section {
   padding: 20px 24px;
   border-bottom: 1px solid var(--border-light);
@@ -393,61 +425,80 @@ input[type="date"]:focus {
    Template 1: Struk Termal Kasir (Narrow Monospace)
 ------------------------------------------------------- */
 .tpl-thermal {
-  max-width: 320px;
+  max-width: 210px;
   margin: 0 auto;
   font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: 11.5px;
+  line-height: 1.65;
   color: #000000;
+  padding: 20px 0;
+}
+
+.thermal-header {
+  padding-bottom: 8px;
 }
 
 .thermal-store {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
   text-align: center;
-  letter-spacing: 0.05em;
-  margin-bottom: 8px;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+  line-height: 1.3;
 }
 
 .thermal-divider-dashed {
   border-top: 1px dashed #444444;
-  margin: 8px 0;
+  margin: 12px 0;
 }
 
 .thermal-meta {
-  font-size: 11px;
+  font-size: 10.5px;
+  line-height: 1.8;
 }
 
 .thermal-items {
-  margin: 10px 0;
+  margin: 14px 0;
 }
 
 .thermal-item-row {
-  margin-bottom: 6px;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
 }
 
 .thermal-item-name {
   font-weight: 600;
+  font-size: 11.5px;
+  margin-bottom: 3px;
 }
 
 .thermal-item-calc {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
+  font-size: 10.5px;
+  color: #333;
+}
+
+.thermal-summary {
+  padding: 8px 0;
 }
 
 .thermal-total-row {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
+  padding: 5px 0;
+  letter-spacing: 0.03em;
 }
 
 .thermal-footer {
   text-align: center;
-  font-size: 10px;
-  margin-top: 14px;
-  letter-spacing: 0.05em;
+  font-size: 11px;
+  margin-top: 20px;
+  padding-top: 8px;
+  letter-spacing: 0.07em;
+  line-height: 2;
 }
 
 /* -------------------------------------------------------
@@ -2822,6 +2873,50 @@ input[type="date"]:focus {
   }
 }
 
+/* =============================================
+   AKSEN WARNA - Elemen Desain (Bukan Logo/Icon)
+   ============================================= */
+
+/* Template 3: Modern - garis aksen atas */
+.modern-accent-bar {
+  height: 4px;
+  width: 100%;
+  margin-bottom: 14px;
+  border-radius: 2px;
+}
+
+/* Template 9: Tall - garis stripe vertikal */
+.tall-accent-stripe {
+  width: 36px;
+  height: 4px;
+  margin: 0 auto 12px;
+  border-radius: 2px;
+}
+
+/* Template 11: Serif - garis double warna */
+.serif-double-line {
+  border-top: 3px double #111;
+  margin: 10px 0 6px;
+}
+
+/* Template 13: Card - border berwarna */
+.card-inner-frame {
+  border: 2px solid #111;
+  border-radius: 6px;
+  padding: 16px;
+}
+.card-header {
+  padding-bottom: 10px;
+  border-bottom: 2px solid #111;
+  margin-bottom: 12px;
+}
+
+/* Template 16: Tag - border kiri */
+.tag-header {
+  padding-left: 12px;
+  margin-bottom: 10px;
+}
+
 /* Responsivitas pada Layar Kecil */
 @media screen and (max-width: 900px) {
   .app-layout {
@@ -2844,4 +2939,707 @@ input[type="date"]:focus {
   .template-buttons {
     justify-content: flex-start;
   }
+}
+
+/* =============================================
+   KWITANSI SEWA TEMPAT - 5 TEMPLATES
+   ============================================= */
+
+/* Base sewa receipt - landscape horizontal */
+.tpl-sewa {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  width: 100%;
+}
+
+/* === TEMPLATE 21: KLASIK RESMI === */
+.tpl-sewa-klasik {
+  border: 1px solid #ccc;
+  background: #f9fdf9;
+}
+
+.sewa-klasik-outer {
+  display: flex;
+  min-height: 260px;
+}
+
+.sewa-klasik-ornament-left {
+  width: 90px;
+  min-width: 90px;
+  background: #e8f5e8;
+  border-right: 2px double #2d6a2d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 6px;
+}
+
+.sewa-ornament-box {
+  border: 2px solid #2d6a2d;
+  padding: 8px 4px;
+  width: 100%;
+  text-align: center;
+}
+
+.sewa-ornament-inner {
+  font-size: 11px;
+  font-weight: 700;
+  color: #2d6a2d;
+  letter-spacing: 0.08em;
+  line-height: 1.8;
+}
+
+.sewa-klasik-body {
+  flex: 1;
+  padding: 20px 24px;
+}
+
+.sewa-klasik-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.sewa-klasik-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.sewa-klasik-no {
+  font-size: 12px;
+  color: #555;
+}
+
+.sewa-no-val {
+  font-weight: 600;
+  color: #111;
+}
+
+.sewa-field-row {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 12px;
+  gap: 6px;
+}
+
+.sewa-field-tall {
+  min-height: 36px;
+}
+
+.sewa-field-label {
+  min-width: 130px;
+  font-size: 12.5px;
+  color: #333;
+  flex-shrink: 0;
+}
+
+.sewa-field-sep {
+  flex-shrink: 0;
+  color: #333;
+}
+
+.sewa-field-value {
+  flex: 1;
+  font-size: 13px;
+}
+
+.sewa-field-underline {
+  border-bottom: 1px solid #999;
+  padding-bottom: 2px;
+  min-width: 150px;
+}
+
+.sewa-terbilang {
+  font-style: italic;
+}
+
+.sewa-klasik-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #ccc;
+}
+
+.sewa-rp-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid #555;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.sewa-rp-label {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.sewa-rp-amount {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.sewa-sign-col {
+  text-align: center;
+  font-size: 12px;
+}
+
+.sewa-sign-place {
+  margin-bottom: 2px;
+}
+
+.sewa-sign-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.sewa-sign-space {
+  height: 50px;
+}
+
+.sewa-sign-line {
+  font-size: 11px;
+  color: #666;
+}
+
+/* === TEMPLATE 22: MODERN BERSIH === */
+.tpl-sewa-modern {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sewam-accent-bar {
+  height: 5px;
+  width: 100%;
+}
+
+.sewam-content {
+  padding: 20px 24px;
+}
+
+.sewam-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.sewam-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.sewam-penerima {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+}
+
+.sewam-no-block {
+  text-align: right;
+  font-size: 12px;
+}
+
+.sewam-no-label {
+  color: #888;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 6px;
+}
+
+.sewam-no-val {
+  font-weight: 600;
+  font-size: 13px;
+  color: #111;
+}
+
+.sewam-divider {
+  height: 2px;
+  margin: 12px 0;
+  opacity: 0.2;
+}
+
+.sewam-fields {
+  margin-bottom: 16px;
+}
+
+.sewam-field {
+  display: flex;
+  padding: 7px 0;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 12px;
+}
+
+.sewam-field-lbl {
+  min-width: 140px;
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+
+.sewam-field-val {
+  font-size: 13px;
+  color: #111;
+  font-weight: 500;
+}
+
+.sewam-terbilang {
+  font-style: italic;
+}
+
+.sewam-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 16px;
+}
+
+.sewam-amount-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 2px solid;
+  border-radius: 50px;
+  padding: 8px 20px;
+}
+
+.sewam-rp {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sewam-amount {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.sewam-sign {
+  text-align: center;
+  font-size: 12px;
+}
+
+.sewam-sign-loc {
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.sewam-sign-role {
+  font-weight: 600;
+}
+
+.sewam-sign-gap {
+  height: 48px;
+}
+
+.sewam-sign-line {
+  border-top: 1px solid;
+  padding-top: 4px;
+  font-size: 11px;
+  color: #666;
+  min-width: 160px;
+}
+
+/* === TEMPLATE 23: FORMAL KORPORAT === */
+.tpl-sewa-formal {
+  background: #fff;
+}
+
+.sewaf-outer-border {
+  border: 3px double #111;
+  padding: 5px;
+}
+
+.sewaf-inner-border {
+  border: 1px solid #aaa;
+  padding: 20px 24px;
+}
+
+.sewaf-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.sewaf-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.sewaf-subtitle {
+  font-size: 12px;
+  color: #555;
+  margin-top: 3px;
+}
+
+.sewaf-no {
+  font-size: 12px;
+  margin-top: 6px;
+  color: #333;
+}
+
+.sewaf-hline {
+  border-top: 1px solid #aaa;
+  margin: 12px 0;
+}
+
+.sewaf-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8px;
+}
+
+.sewaf-lbl {
+  width: 130px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #333;
+  padding: 7px 0;
+  vertical-align: top;
+}
+
+.sewaf-sep {
+  width: 16px;
+  padding: 7px 4px;
+  vertical-align: top;
+}
+
+.sewaf-val {
+  font-size: 13px;
+  padding: 7px 0;
+  vertical-align: top;
+}
+
+.sewaf-underline {
+  border-bottom: 1px solid #bbb;
+  padding-bottom: 2px;
+}
+
+.sewaf-terbilang {
+  font-style: italic;
+}
+
+.sewaf-amount-bold {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.sewaf-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 8px;
+}
+
+.sewaf-note {
+  font-size: 11px;
+  color: #777;
+  max-width: 55%;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.sewaf-sign-block {
+  text-align: center;
+  font-size: 12px;
+}
+
+.sewaf-sign-loc {
+  margin-bottom: 2px;
+  color: #555;
+}
+
+.sewaf-sign-role {
+  font-weight: 600;
+}
+
+.sewaf-sign-gap {
+  height: 50px;
+}
+
+.sewaf-sign-name {
+  font-size: 11px;
+  color: #666;
+}
+
+/* === TEMPLATE 24: MINIMALIS AKSEN KIRI === */
+.tpl-sewa-minimal {
+  display: flex;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.sewamin-left-bar {
+  width: 6px;
+  flex-shrink: 0;
+}
+
+.sewamin-content {
+  flex: 1;
+  padding: 20px 22px;
+}
+
+.sewamin-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.sewamin-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sewamin-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  border: 1.5px solid;
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+.sewamin-subtitle {
+  font-size: 13px;
+  color: #555;
+}
+
+.sewamin-id-group {
+  text-align: right;
+}
+
+.sewamin-no {
+  display: block;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.sewamin-date {
+  display: block;
+  font-size: 11px;
+  color: #888;
+  margin-top: 2px;
+}
+
+.sewamin-penerima {
+  font-size: 17px;
+  font-weight: 700;
+  padding: 8px 10px;
+  background: #fafafa;
+  margin-bottom: 14px;
+}
+
+.sewamin-fields {
+  margin-bottom: 16px;
+}
+
+.sewamin-row {
+  display: flex;
+  align-items: baseline;
+  padding: 5px 0;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 10px;
+}
+
+.sewamin-lbl {
+  min-width: 110px;
+  font-size: 11px;
+  color: #888;
+  flex-shrink: 0;
+}
+
+.sewamin-colon {
+  flex-shrink: 0;
+  color: #888;
+}
+
+.sewamin-val {
+  font-size: 13px;
+  color: #111;
+}
+
+.sewamin-terbilang {
+  font-style: italic;
+}
+
+.sewamin-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 14px;
+}
+
+.sewamin-amount {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.sewamin-sign {
+  text-align: center;
+  font-size: 12px;
+}
+
+.sewamin-sign-loc {
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.sewamin-sign-role {
+  font-weight: 600;
+}
+
+.sewamin-sign-space {
+  height: 46px;
+}
+
+.sewamin-sign-line {
+  font-size: 11px;
+  color: #888;
+  border-top: 1px dashed #ccc;
+  padding-top: 4px;
+}
+
+/* === TEMPLATE 25: RETRO VINTAGE === */
+.tpl-sewa-retro {
+  background: #fffef8;
+}
+
+.sewa-retro-frame {
+  border: 3px solid #333;
+  padding: 4px;
+}
+
+.sewa-retro-frame > * {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.sewa-retro-header {
+  text-align: center;
+  background: #111;
+  color: #fff;
+  padding: 12px 16px;
+}
+
+.sewa-retro-star {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  opacity: 0.7;
+}
+
+.sewa-retro-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  font-family: var(--font-mono);
+  margin: 4px 0 2px;
+}
+
+.sewa-retro-sub {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  opacity: 0.8;
+}
+
+.sewa-retro-no {
+  font-size: 11px;
+  margin-top: 6px;
+  opacity: 0.85;
+  font-family: var(--font-mono);
+}
+
+.sewa-retro-dashes {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #666;
+  padding: 4px 16px;
+  letter-spacing: 0.08em;
+}
+
+.sewa-retro-body {
+  padding: 10px 16px;
+  font-family: var(--font-mono);
+}
+
+.sewa-retro-row {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.sewa-retro-lbl {
+  min-width: 135px;
+  font-size: 11.5px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.sewa-retro-sep {
+  flex-shrink: 0;
+}
+
+.sewa-retro-val {
+  font-size: 12px;
+  border-bottom: 1px solid #aaa;
+  flex: 1;
+  padding-bottom: 2px;
+}
+
+.sewa-retro-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 10px 16px 14px;
+  background: #f5f5f0;
+  border-top: 2px solid #333;
+}
+
+.sewa-retro-amount {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.sewa-retro-rp {
+  font-size: 20px;
+  letter-spacing: 0.05em;
+}
+
+.sewa-retro-sign {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.sewa-retro-role {
+  font-weight: 700;
+  margin: 3px 0;
+}
+
+.sewa-retro-sign-space {
+  height: 44px;
 }

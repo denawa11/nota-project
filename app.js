@@ -111,7 +111,310 @@ function randomizeLogoColors() {
   updateLivePreview();
 }
 
-// State Default
+// State Default Kwitansi Sewa
+function getDefaultSewaState() {
+  const today = new Date().toISOString().split('T')[0];
+  return {
+    sewaNo: 'KW-001',
+    sewaPenerima: '',
+    sewaDariPihak: '',
+    sewaJumlah: 0,
+    sewaKeterangan: 'Sewa tempat untuk kegiatan promosi di Pasar Badung',
+    sewaLokasi: '',
+    sewaTanggal: today,
+    sewaYangMenerima: '',
+    selectedSewaTemplate: 21
+  };
+}
+
+// Konversi angka ke terbilang (Bahasa Indonesia)
+function terbilang(angka) {
+  const satuan = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan',
+    'sepuluh', 'sebelas', 'dua belas', 'tiga belas', 'empat belas', 'lima belas', 'enam belas',
+    'tujuh belas', 'delapan belas', 'sembilan belas'];
+  const n = Math.abs(Math.round(Number(angka) || 0));
+  if (n === 0) return 'nol';
+  if (n < 20) return satuan[n];
+  if (n < 100) return satuan[Math.floor(n / 10) * 10 > 0 ? 0 : 0] + (Math.floor(n/10) === 1 ? 'sepuluh' : satuan[Math.floor(n/10)] + ' puluh') + (n % 10 ? ' ' + satuan[n % 10] : '');
+  if (n < 1000) return (n < 200 ? 'seratus' : satuan[Math.floor(n/100)] + ' ratus') + (n % 100 ? ' ' + terbilang(n % 100) : '');
+  if (n < 1000000) return (n < 2000 ? 'seribu' : terbilang(Math.floor(n/1000)) + ' ribu') + (n % 1000 ? ' ' + terbilang(n % 1000) : '');
+  if (n < 1000000000) return terbilang(Math.floor(n/1000000)) + ' juta' + (n % 1000000 ? ' ' + terbilang(n % 1000000) : '');
+  return terbilang(Math.floor(n/1000000000)) + ' miliar' + (n % 1000000000 ? ' ' + terbilang(n % 1000000000) : '');
+}
+
+function terbilangRupiah(angka) {
+  const t = terbilang(angka);
+  return t.charAt(0).toUpperCase() + t.slice(1) + ' rupiah';
+}
+
+// ==========================================
+// 5 TEMPLATE KWITANSI SEWA TEMPAT (LANDSCAPE)
+// ==========================================
+
+// Template 21: Kwitansi Klasik Resmi (mirip contoh asli)
+function renderTemplate21(state) {
+  const jumlah = Number(state.sewaJumlah) || 0;
+  const tb = terbilangRupiah(jumlah);
+  const accentColor = '#2d6a2d';
+  return `
+    <div class="receipt-body tpl-sewa tpl-sewa-klasik">
+      <div class="sewa-klasik-outer">
+        <div class="sewa-klasik-ornament-left">
+          <div class="sewa-ornament-box">
+            <div class="sewa-ornament-inner">K<br>W<br>I<br>T<br>A<br>N<br>S<br>I</div>
+          </div>
+        </div>
+        <div class="sewa-klasik-body">
+          <div class="sewa-klasik-header">
+            <div class="sewa-klasik-title" style="color: ${accentColor};">KWITANSI SEWA TEMPAT</div>
+            <div class="sewa-klasik-no">No: <span class="sewa-no-val">${escapeHtml(state.sewaNo || '-')}</span></div>
+          </div>
+          <div class="sewa-field-row">
+            <span class="sewa-field-label">Telah terima dari</span>
+            <span class="sewa-field-sep">:</span>
+            <span class="sewa-field-value sewa-field-underline">${escapeHtml(state.sewaDariPihak || '...............................................')}</span>
+          </div>
+          <div class="sewa-field-row">
+            <span class="sewa-field-label">Uang sejumlah</span>
+            <span class="sewa-field-sep">:</span>
+            <span class="sewa-field-value sewa-field-underline sewa-terbilang">${escapeHtml(jumlah > 0 ? tb : '...............................................')}</span>
+          </div>
+          <div class="sewa-field-row sewa-field-tall">
+            <span class="sewa-field-label">Untuk pembayaran</span>
+            <span class="sewa-field-sep">:</span>
+            <span class="sewa-field-value sewa-field-underline">${escapeHtml(state.sewaKeterangan || '...............................................')}</span>
+          </div>
+          <div class="sewa-klasik-bottom">
+            <div class="sewa-rp-box">
+              <span class="sewa-rp-label">Rp.</span>
+              <span class="sewa-rp-amount">${jumlah > 0 ? jumlah.toLocaleString('id-ID') + ',-' : '.....................'}</span>
+            </div>
+            <div class="sewa-sign-col">
+              <div class="sewa-sign-place">${escapeHtml(state.sewaLokasi || '...............') + ', ' + escapeHtml(state.sewaTanggal || '')}</div>
+              <div class="sewa-sign-name">${escapeHtml(state.sewaYangMenerima || 'Yang Menerima')}</div>
+              <div class="sewa-sign-space"></div>
+              <div class="sewa-sign-line">( ......................................... )</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Template 22: Kwitansi Modern Bersih
+function renderTemplate22(state) {
+  const jumlah = Number(state.sewaJumlah) || 0;
+  const tb = terbilangRupiah(jumlah);
+  const accentColor = '#1e40af';
+  return `
+    <div class="receipt-body tpl-sewa tpl-sewa-modern">
+      <div class="sewam-accent-bar" style="background: ${accentColor};"></div>
+      <div class="sewam-content">
+        <div class="sewam-header">
+          <div>
+            <div class="sewam-label" style="color: ${accentColor};">KWITANSI SEWA TEMPAT</div>
+            <div class="sewam-penerima">${escapeHtml(state.sewaPenerima || 'Nama Instansi / Pengelola')}</div>
+          </div>
+          <div class="sewam-no-block">
+            <div class="sewam-no-label">No. Kwitansi</div>
+            <div class="sewam-no-val">${escapeHtml(state.sewaNo || '-')}</div>
+            <div class="sewam-no-label">Tanggal</div>
+            <div class="sewam-no-val">${formatDateIndo(state.sewaTanggal)}</div>
+          </div>
+        </div>
+        <div class="sewam-divider" style="background: ${accentColor};"></div>
+        <div class="sewam-fields">
+          <div class="sewam-field">
+            <span class="sewam-field-lbl">Diterima dari</span>
+            <span class="sewam-field-val">${escapeHtml(state.sewaDariPihak || '—')}</span>
+          </div>
+          <div class="sewam-field">
+            <span class="sewam-field-lbl">Uang sejumlah</span>
+            <span class="sewam-field-val sewam-terbilang">${jumlah > 0 ? escapeHtml(tb) : '—'}</span>
+          </div>
+          <div class="sewam-field">
+            <span class="sewam-field-lbl">Untuk pembayaran</span>
+            <span class="sewam-field-val">${escapeHtml(state.sewaKeterangan || '—')}</span>
+          </div>
+        </div>
+        <div class="sewam-bottom">
+          <div class="sewam-amount-pill" style="border-color: ${accentColor}; color: ${accentColor};">
+            <span class="sewam-rp">Rp</span>
+            <span class="sewam-amount">${jumlah > 0 ? jumlah.toLocaleString('id-ID') + ',-' : '0,-'}</span>
+          </div>
+          <div class="sewam-sign">
+            <div class="sewam-sign-loc">${escapeHtml(state.sewaLokasi || '') + (state.sewaLokasi ? ', ' : '') + formatDateIndo(state.sewaTanggal)}</div>
+            <div class="sewam-sign-role">${escapeHtml(state.sewaYangMenerima || 'Yang Menerima')}</div>
+            <div class="sewam-sign-gap"></div>
+            <div class="sewam-sign-line" style="border-color: ${accentColor};">( ..................................... )</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Template 23: Kwitansi Formal Korporat (Double Border)
+function renderTemplate23(state) {
+  const jumlah = Number(state.sewaJumlah) || 0;
+  const tb = terbilangRupiah(jumlah);
+  return `
+    <div class="receipt-body tpl-sewa tpl-sewa-formal">
+      <div class="sewaf-outer-border">
+        <div class="sewaf-inner-border">
+          <div class="sewaf-header">
+            <div class="sewaf-title">KWITANSI</div>
+            <div class="sewaf-subtitle">Bukti Penerimaan Pembayaran Sewa Tempat</div>
+            <div class="sewaf-no">Nomor: ${escapeHtml(state.sewaNo || '-')}</div>
+          </div>
+          <div class="sewaf-hline"></div>
+          <div class="sewaf-body">
+            <table class="sewaf-table">
+              <tr>
+                <td class="sewaf-lbl">Diterima dari</td>
+                <td class="sewaf-sep">:</td>
+                <td class="sewaf-val sewaf-underline">${escapeHtml(state.sewaDariPihak || '')}</td>
+              </tr>
+              <tr>
+                <td class="sewaf-lbl">Terbilang</td>
+                <td class="sewaf-sep">:</td>
+                <td class="sewaf-val sewaf-underline sewaf-terbilang">${jumlah > 0 ? escapeHtml(tb) : ''}</td>
+              </tr>
+              <tr>
+                <td class="sewaf-lbl">Keterangan</td>
+                <td class="sewaf-sep">:</td>
+                <td class="sewaf-val sewaf-underline">${escapeHtml(state.sewaKeterangan || '')}</td>
+              </tr>
+              <tr>
+                <td class="sewaf-lbl">Jumlah (Rp)</td>
+                <td class="sewaf-sep">:</td>
+                <td class="sewaf-val sewaf-amount-bold">Rp ${jumlah > 0 ? jumlah.toLocaleString('id-ID') + ',-' : '0,-'}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="sewaf-hline"></div>
+          <div class="sewaf-footer">
+            <div class="sewaf-note">Pembayaran telah diterima dengan baik. Kwitansi ini merupakan bukti resmi yang sah.</div>
+            <div class="sewaf-sign-block">
+              <div class="sewaf-sign-loc">${escapeHtml(state.sewaLokasi || '') + (state.sewaLokasi ? ', ' : '') + formatDateIndo(state.sewaTanggal)}</div>
+              <div class="sewaf-sign-role">${escapeHtml(state.sewaYangMenerima || 'Yang Menerima')}</div>
+              <div class="sewaf-sign-gap"></div>
+              <div class="sewaf-sign-name">( ......................................... )</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Template 24: Kwitansi Minimalis Aksen Kiri
+function renderTemplate24(state) {
+  const jumlah = Number(state.sewaJumlah) || 0;
+  const tb = terbilangRupiah(jumlah);
+  const accentColor = '#7c3aed';
+  return `
+    <div class="receipt-body tpl-sewa tpl-sewa-minimal">
+      <div class="sewamin-left-bar" style="background: ${accentColor};"></div>
+      <div class="sewamin-content">
+        <div class="sewamin-top">
+          <div class="sewamin-title-group">
+            <span class="sewamin-tag" style="color: ${accentColor}; border-color: ${accentColor};">KWITANSI</span>
+            <span class="sewamin-subtitle">Sewa Tempat</span>
+          </div>
+          <div class="sewamin-id-group">
+            <span class="sewamin-no">${escapeHtml(state.sewaNo || 'KW-001')}</span>
+            <span class="sewamin-date">${formatDateIndo(state.sewaTanggal)}</span>
+          </div>
+        </div>
+        <div class="sewamin-penerima" style="border-left: 3px solid ${accentColor};">
+          ${escapeHtml(state.sewaPenerima || 'Nama Instansi / Pengelola')}
+        </div>
+        <div class="sewamin-fields">
+          <div class="sewamin-row">
+            <span class="sewamin-lbl">Diterima dari</span>
+            <span class="sewamin-colon">:</span>
+            <span class="sewamin-val">${escapeHtml(state.sewaDariPihak || '—')}</span>
+          </div>
+          <div class="sewamin-row">
+            <span class="sewamin-lbl">Terbilang</span>
+            <span class="sewamin-colon">:</span>
+            <span class="sewamin-val sewamin-terbilang">${jumlah > 0 ? escapeHtml(tb) : '—'}</span>
+          </div>
+          <div class="sewamin-row">
+            <span class="sewamin-lbl">Keterangan</span>
+            <span class="sewamin-colon">:</span>
+            <span class="sewamin-val">${escapeHtml(state.sewaKeterangan || '—')}</span>
+          </div>
+        </div>
+        <div class="sewamin-bottom">
+          <div class="sewamin-amount" style="color: ${accentColor};">
+            Rp ${jumlah > 0 ? jumlah.toLocaleString('id-ID') + ',-' : '0,-'}
+          </div>
+          <div class="sewamin-sign">
+            <div class="sewamin-sign-loc">${escapeHtml(state.sewaLokasi || '') + (state.sewaLokasi ? ', ' : '') + formatDateIndo(state.sewaTanggal)}</div>
+            <div class="sewamin-sign-role">${escapeHtml(state.sewaYangMenerima || 'Yang Menerima')}</div>
+            <div class="sewamin-sign-space"></div>
+            <div class="sewamin-sign-line">( ..................................... )</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Template 25: Kwitansi Retro Vintage
+function renderTemplate25(state) {
+  const jumlah = Number(state.sewaJumlah) || 0;
+  const tb = terbilangRupiah(jumlah);
+  return `
+    <div class="receipt-body tpl-sewa tpl-sewa-retro">
+      <div class="sewa-retro-frame">
+        <div class="sewa-retro-header">
+          <div class="sewa-retro-star">✦ ✦ ✦</div>
+          <div class="sewa-retro-title">K W I T A N S I</div>
+          <div class="sewa-retro-sub">BUKTI PEMBAYARAN SEWA TEMPAT</div>
+          <div class="sewa-retro-star">✦ ✦ ✦</div>
+          <div class="sewa-retro-no">No: ${escapeHtml(state.sewaNo || '-')}</div>
+        </div>
+        <div class="sewa-retro-dashes">= = = = = = = = = = = = = = = = = = = = = = = = = = = =</div>
+        <div class="sewa-retro-body">
+          <div class="sewa-retro-row">
+            <span class="sewa-retro-lbl">DITERIMA DARI</span>
+            <span class="sewa-retro-sep">:</span>
+            <span class="sewa-retro-val">${escapeHtml(state.sewaDariPihak || '...................................')}</span>
+          </div>
+          <div class="sewa-retro-row">
+            <span class="sewa-retro-lbl">UANG SEJUMLAH</span>
+            <span class="sewa-retro-sep">:</span>
+            <span class="sewa-retro-val">${jumlah > 0 ? escapeHtml(tb).toUpperCase() : '...................................'}</span>
+          </div>
+          <div class="sewa-retro-row">
+            <span class="sewa-retro-lbl">KETERANGAN</span>
+            <span class="sewa-retro-sep">:</span>
+            <span class="sewa-retro-val">${escapeHtml(state.sewaKeterangan || '...................................')}</span>
+          </div>
+        </div>
+        <div class="sewa-retro-dashes">= = = = = = = = = = = = = = = = = = = = = = = = = = = =</div>
+        <div class="sewa-retro-bottom">
+          <div class="sewa-retro-amount">
+            <span>RP.</span>
+            <span class="sewa-retro-rp">${jumlah > 0 ? jumlah.toLocaleString('id-ID') + ',-' : '.......................'}</span>
+          </div>
+          <div class="sewa-retro-sign">
+            <div>${escapeHtml(state.sewaLokasi || '') + (state.sewaLokasi ? ', ' : '') + escapeHtml(state.sewaTanggal || '')}</div>
+            <div class="sewa-retro-role">${escapeHtml(state.sewaYangMenerima || 'YANG MENERIMA')}</div>
+            <div class="sewa-retro-sign-space"></div>
+            <div>( ..................................... )</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// State Default Nota Biasa
 function getDefaultState() {
   const today = new Date().toISOString().split('T')[0];
   return {
@@ -129,7 +432,7 @@ function getDefaultState() {
 }
 
 // ==========================================
-// RENDERER 7 TEMPLATE NOTA (100% MONOKROM)
+// RENDERER TEMPLATE NOTA (100% MONOKROM)
 // ==========================================
 
 // Template 1: Struk Termal Kasir (Thermal POS)
@@ -271,21 +574,15 @@ function renderTemplate3(state) {
     `;
   }).join('');
 
-  const logoColor = getLogoColor(3);
+  const accentColor = getLogoColor(3);
 
   return `
     <div class="receipt-body tpl-modern">
+      <div class="modern-accent-bar" style="background-color: ${accentColor};"></div>
       <div class="modern-header">
         <div class="modern-brand-group">
-          <div class="brand-logo-mark" style="background-color: ${logoColor}; color: #ffffff;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-              <polyline points="2 17 12 22 22 17"></polyline>
-              <polyline points="2 12 12 17 22 12"></polyline>
-            </svg>
-          </div>
           <div>
-            <span class="modern-kicker">NOTA TRANSAKSI</span>
+            <span class="modern-kicker" style="color: ${accentColor};">NOTA TRANSAKSI</span>
             <h2 class="modern-store">${escapeHtml(state.storeName || 'NAMA TOKO')}</h2>
           </div>
         </div>
@@ -651,19 +948,13 @@ function renderTemplate9(state) {
     `;
   }).join('');
 
-  const logoColor = getLogoColor(9);
+  const accentColor = getLogoColor(9);
 
   return `
     <div class="receipt-body tpl-vertical-tall">
       <div class="tall-header">
-        <div class="brand-logo-tall" style="background-color: ${logoColor}; color: #ffffff;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <path d="M16 10a4 4 0 0 1-8 0"></path>
-          </svg>
-        </div>
-        <span class="tall-kicker">FAKTUR PENJUALAN</span>
+        <div class="tall-accent-stripe" style="background-color: ${accentColor};"></div>
+        <span class="tall-kicker" style="color: ${accentColor};">FAKTUR PENJUALAN</span>
         <h2 class="tall-store-title">${escapeHtml(state.storeName || 'NAMA TOKO')}</h2>
         
         <div class="tall-meta-stack">
@@ -781,19 +1072,13 @@ function renderTemplate11(state) {
     `;
   }).join('');
 
-  const logoColor = getLogoColor(11);
+  const accentColor = getLogoColor(11);
 
   return `
     <div class="receipt-body tpl-vertical-serif">
-      <div class="serif-double-line"></div>
+      <div class="serif-double-line" style="border-color: ${accentColor};"></div>
       <div class="serif-header">
-        <div class="serif-logo-crest" style="color: ${logoColor};">
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            <path d="M12 8v8M8 12h8"></path>
-          </svg>
-        </div>
-        <div class="serif-kicker">BUKTI TRANSAKSI PEMBAYARAN</div>
+        <div class="serif-kicker" style="color: ${accentColor};">BUKTI TRANSAKSI PEMBAYARAN</div>
         <h2 class="serif-store-title">${escapeHtml(state.storeName || 'NAMA TOKO')}</h2>
         <div class="serif-meta-centered">
           <span>No: ${escapeHtml(state.receiptNo || '-')}</span>
@@ -896,20 +1181,14 @@ function renderTemplate13(state) {
     `;
   }).join('');
 
-  const logoColor = getLogoColor(13);
+  const accentColor = getLogoColor(13);
 
   return `
     <div class="receipt-body tpl-vertical-card">
-      <div class="card-inner-frame">
-        <div class="card-header">
+      <div class="card-inner-frame" style="border-color: ${accentColor};">
+        <div class="card-header" style="border-bottom-color: ${accentColor};">
           <div class="card-header-top">
-            <div class="card-logo-emblem" style="background-color: ${logoColor}; color: #ffffff;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="5" width="20" height="14" rx="2"></rect>
-                <line x1="2" y1="10" x2="22" y2="10"></line>
-              </svg>
-            </div>
-            <span class="card-label">KARTU NOTA</span>
+            <span class="card-label" style="color: ${accentColor};">KARTU NOTA</span>
             <span class="card-date">${formatDateIndo(state.date)}</span>
           </div>
           <h2 class="card-store-name">${escapeHtml(state.storeName || 'NAMA TOKO')}</h2>
@@ -1004,21 +1283,12 @@ function renderTemplate15(state) {
     `;
   }).join('');
 
-  const logoColor = getLogoColor(15);
+  const accentColor = getLogoColor(15);
 
   return `
     <div class="receipt-body tpl-vertical-cafe">
-      <div class="cafe-header">
-        <div class="cafe-logo-mark" style="background-color: ${logoColor}; color: #ffffff;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-            <line x1="6" y1="1" x2="6" y2="4"></line>
-            <line x1="10" y1="1" x2="10" y2="4"></line>
-            <line x1="14" y1="1" x2="14" y2="4"></line>
-          </svg>
-        </div>
-        <div class="cafe-badge">PESANAN MEJA / DINE-IN</div>
+      <div class="cafe-header" style="border-top: 4px solid ${accentColor};">
+        <div class="cafe-badge" style="color: ${accentColor}; border-color: ${accentColor};">PESANAN MEJA / DINE-IN</div>
         <h2 class="cafe-store">${escapeHtml(state.storeName || 'NAMA CAFE / TOKO')}</h2>
         <div class="cafe-meta-pill">
           <span>NO: ${escapeHtml(state.receiptNo || '-')}</span>
@@ -1075,7 +1345,7 @@ function renderTemplate16(state) {
     `;
   }).join('');
 
-  const logoColor = getLogoColor(16);
+  const accentColor = getLogoColor(16);
 
   return `
     <div class="receipt-body tpl-vertical-tag">
@@ -1084,14 +1354,8 @@ function renderTemplate16(state) {
       </div>
 
       <div class="tag-card-box">
-        <div class="tag-header">
-          <div class="tag-logo-mark" style="color: ${logoColor};">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-              <circle cx="7" cy="7" r="1.5" fill="currentColor"></circle>
-            </svg>
-          </div>
-          <div class="tag-kicker">BUKTI RESMI TRANSAKSI</div>
+        <div class="tag-header" style="border-left: 4px solid ${accentColor};">
+          <div class="tag-kicker" style="color: ${accentColor};">BUKTI RESMI TRANSAKSI</div>
           <h2 class="tag-store">${escapeHtml(state.storeName || 'NAMA TOKO')}</h2>
           <div class="tag-meta-grid">
             <div><span class="tag-lbl">FAKTUR :</span> <strong>${escapeHtml(state.receiptNo || '-')}</strong></div>
@@ -1200,17 +1464,13 @@ function renderTemplate18(state) {
     `;
   }).join('');
 
-  const logoColor = getLogoColor(18);
+  const accentColor = getLogoColor(18);
 
   return `
     <div class="receipt-body tpl-vertical-luxury">
       <div class="luxury-header">
-        <div class="luxury-logo-mark" style="color: ${logoColor};">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 3h12l4 6-10 12L2 9z"></path>
-          </svg>
-        </div>
-        <div class="luxury-kicker">R E C E I P T</div>
+        <div class="luxury-accent-bar" style="background-color: ${accentColor}; width: 40px; height: 3px; margin: 0 auto 10px;"></div>
+        <div class="luxury-kicker" style="color: ${accentColor};">R E C E I P T</div>
         <h2 class="luxury-brand">${escapeHtml(state.storeName || 'MAISON / BOUTIQUE')}</h2>
         <div class="luxury-meta-line">
           <span>№ ${escapeHtml(state.receiptNo || '-')}</span>
@@ -1404,18 +1664,34 @@ function renderReceipt(state) {
   }
 }
 
+function renderKwitansi(state) {
+  const tpl = Number(state.selectedSewaTemplate) || 21;
+  switch (tpl) {
+    case 21: return renderTemplate21(state);
+    case 22: return renderTemplate22(state);
+    case 23: return renderTemplate23(state);
+    case 24: return renderTemplate24(state);
+    case 25: return renderTemplate25(state);
+    default: return renderTemplate21(state);
+  }
+}
+
 // ==========================================
 // BROWSER CLIENT-SIDE CONTROLLER
 // ==========================================
 
 const STORAGE_KEY = 'nota_generator_state_v1';
+const STORAGE_KEY_SEWA = 'nota_generator_sewa_v1';
 
 let appState = null;
+let sewaState = null;
+let appMode = 'nota'; // 'nota' | 'sewa'
 
 function saveState() {
-  if (typeof localStorage !== 'undefined' && appState) {
+  if (typeof localStorage !== 'undefined') {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      if (appState) localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      if (sewaState) localStorage.setItem(STORAGE_KEY_SEWA, JSON.stringify(sewaState));
     } catch (e) {
       console.warn("Gagal menyimpan ke localStorage:", e);
     }
@@ -1429,9 +1705,7 @@ function loadState() {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed && Array.isArray(parsed.items)) {
-          if (!parsed.logoColors) {
-            parsed.logoColors = getDefaultLogoColors();
-          }
+          if (!parsed.logoColors) parsed.logoColors = getDefaultLogoColors();
           return parsed;
         }
       }
@@ -1442,17 +1716,35 @@ function loadState() {
   return getDefaultState();
 }
 
+function loadSewaState() {
+  if (typeof localStorage !== 'undefined') {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY_SEWA);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && parsed.sewaNo) return parsed;
+      }
+    } catch (e) {}
+  }
+  return getDefaultSewaState();
+}
+
 function updateLivePreview() {
   const paper = document.getElementById('receiptPaper');
-  if (paper && appState) {
-    paper.innerHTML = renderReceipt(appState);
-  }
+  if (!paper) return;
 
-  // Update total pada panel form
-  const totalDisplay = document.getElementById('formTotalDisplay');
-  if (totalDisplay && appState) {
-    const total = calculateTotal(appState.items);
-    totalDisplay.textContent = formatRupiah(total);
+  if (appMode === 'sewa' && sewaState) {
+    paper.innerHTML = renderKwitansi(sewaState);
+    // Hide total display in sewa mode
+    const totalDisplay = document.getElementById('formTotalDisplay');
+    if (totalDisplay) totalDisplay.textContent = sewaState.sewaJumlah > 0 ? formatRupiah(sewaState.sewaJumlah) : 'Rp 0';
+  } else if (appState) {
+    paper.innerHTML = renderReceipt(appState);
+    const totalDisplay = document.getElementById('formTotalDisplay');
+    if (totalDisplay) {
+      const total = calculateTotal(appState.items);
+      totalDisplay.textContent = formatRupiah(total);
+    }
   }
 }
 
@@ -1663,8 +1955,84 @@ function initBrowserApp() {
   }
 
   // Initial render
+  sewaState = loadSewaState();
   renderEditorItems();
   updateLivePreview();
+  initSewaForm();
+}
+
+function initSewaForm() {
+  // Mode tab switcher
+  const tabNota = document.getElementById('tabNota');
+  const tabSewa = document.getElementById('tabSewa');
+  const panelNota = document.getElementById('panelNota');
+  const panelSewa = document.getElementById('panelSewa');
+  const sewaTemplateBtns = document.querySelectorAll('.sewa-tpl-btn');
+
+  function switchMode(mode) {
+    appMode = mode;
+    if (mode === 'sewa') {
+      if (tabNota) tabNota.classList.remove('active');
+      if (tabSewa) tabSewa.classList.add('active');
+      if (panelNota) panelNota.style.display = 'none';
+      if (panelSewa) panelSewa.style.display = 'block';
+    } else {
+      if (tabSewa) tabSewa.classList.remove('active');
+      if (tabNota) tabNota.classList.add('active');
+      if (panelSewa) panelSewa.style.display = 'none';
+      if (panelNota) panelNota.style.display = 'block';
+    }
+    updateLivePreview();
+  }
+
+  if (tabNota) tabNota.addEventListener('click', () => switchMode('nota'));
+  if (tabSewa) tabSewa.addEventListener('click', () => switchMode('sewa'));
+
+  // Sewa template switchers
+  sewaTemplateBtns.forEach(btn => {
+    const tplNum = parseInt(btn.dataset.sewaTpl, 10);
+    if (tplNum === (sewaState.selectedSewaTemplate || 21)) btn.classList.add('active');
+    btn.addEventListener('click', () => {
+      sewaTemplateBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      sewaState.selectedSewaTemplate = tplNum;
+      saveState();
+      if (appMode === 'sewa') updateLivePreview();
+    });
+  });
+
+  // Bind sewa form inputs
+  const bindSewa = (id, field, isNumber) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.value = isNumber ? (sewaState[field] || '') : (sewaState[field] || '');
+    el.addEventListener('input', (e) => {
+      sewaState[field] = isNumber ? (parseFloat(e.target.value) || 0) : e.target.value;
+      saveState();
+      if (appMode === 'sewa') updateLivePreview();
+    });
+  };
+
+  bindSewa('sewaNoInput', 'sewaNo', false);
+  bindSewa('sewaPenerimaInput', 'sewaPenerima', false);
+  bindSewa('sewaDariPihakInput', 'sewaDariPihak', false);
+  bindSewa('sewaJumlahInput', 'sewaJumlah', true);
+  bindSewa('sewaKeteranganInput', 'sewaKeterangan', false);
+  bindSewa('sewaLokasiInput', 'sewaLokasi', false);
+  bindSewa('sewaTanggalInput', 'sewaTanggal', false);
+  bindSewa('sewaYangMenerimaInput', 'sewaYangMenerima', false);
+
+  // Set initial input values
+  const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
+  setVal('sewaNoInput', sewaState.sewaNo);
+  setVal('sewaPenerimaInput', sewaState.sewaPenerima);
+  setVal('sewaDariPihakInput', sewaState.sewaDariPihak);
+  const jumlahEl = document.getElementById('sewaJumlahInput');
+  if (jumlahEl) jumlahEl.value = sewaState.sewaJumlah || '';
+  setVal('sewaKeteranganInput', sewaState.sewaKeterangan);
+  setVal('sewaLokasiInput', sewaState.sewaLokasi);
+  setVal('sewaTanggalInput', sewaState.sewaTanggal);
+  setVal('sewaYangMenerimaInput', sewaState.sewaYangMenerima);
 }
 
 // Download Nota sebagai File Gambar PNG (Sesuai Ukuran Asli Nota Tanpa Terpotong)
@@ -1689,14 +2057,25 @@ async function downloadReceiptAsPNG() {
     downloadBtn.disabled = true;
   }
 
-  // Ambil lebar nota
-  const computedStyle = window.getComputedStyle(receiptEl);
-  let baseWidth = Math.ceil(parseFloat(computedStyle.width) || receiptEl.getBoundingClientRect().width || 600);
-  if (baseWidth < 300) baseWidth = 360;
+  // Ambil lebar nota — berbeda per mode/template
+  const isThermal = appMode !== 'sewa' && appState && appState.selectedTemplate === 1;
+  const isSewa = appMode === 'sewa';
+  let baseWidth;
+  if (isThermal) {
+    baseWidth = Math.ceil(parseFloat(window.getComputedStyle(receiptEl).width) || receiptEl.getBoundingClientRect().width || 210);
+    if (baseWidth > 280) baseWidth = 250;
+  } else if (isSewa) {
+    // Kwitansi sewa: landscape/wide, pakai lebar penuh paper
+    baseWidth = Math.ceil(parseFloat(window.getComputedStyle(receiptEl).width) || receiptEl.getBoundingClientRect().width || 680);
+    if (baseWidth < 500) baseWidth = 620;
+  } else {
+    baseWidth = Math.ceil(parseFloat(window.getComputedStyle(receiptEl).width) || receiptEl.getBoundingClientRect().width || 600);
+    if (baseWidth < 300) baseWidth = 420;
+  }
 
   // Margin putih di sekeliling nota
-  const paddingX = 28;
-  const paddingY = 28;
+  const paddingX = isThermal ? 16 : 28;
+  const paddingY = isThermal ? 20 : 28;
   const totalWidth = baseWidth + (paddingX * 2);
 
   // Kumpulkan semua rules CSS dari document untuk diinjeksikan langsung ke iframe
@@ -1758,7 +2137,7 @@ async function downloadReceiptAsPNG() {
           .receipt-body {
             box-shadow: none !important;
             margin: 0 auto !important;
-            width: ${baseWidth}px !important;
+            ${isThermal ? '' : `width: ${baseWidth}px !important;`}
             max-width: 100% !important;
           }
         </style>

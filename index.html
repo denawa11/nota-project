@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nota Generator - Pembuat Nota & Faktur Simpel</title>
-  <link rel="stylesheet" href="style.css?v=6">
+  <title>Nota Generator - Pembuat Nota & Kwitansi Sewa Tempat</title>
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
   <div class="app-layout">
@@ -12,59 +12,124 @@
     <aside class="editor-panel no-print" id="editorPanel">
       <header class="editor-header">
         <h1 class="app-title">Nota Generator</h1>
-        <p class="app-subtitle">Pembuat nota monokrom lokal & siap cetak</p>
+        <p class="app-subtitle">Pembuat nota & kwitansi sewa tempat</p>
       </header>
 
-      <section class="form-section">
-        <div class="form-group">
-          <label for="storeNameInput">Nama Toko / Usaha</label>
-          <input type="text" id="storeNameInput" placeholder="Contoh: TOKO MAKMUR SEJAHTERA" autocomplete="off">
-        </div>
+      <!-- Mode Tab Switcher -->
+      <div class="mode-tabs">
+        <button type="button" class="mode-tab active" id="tabNota">📄 Nota / Faktur</button>
+        <button type="button" class="mode-tab" id="tabSewa">🏠 Kwitansi Sewa</button>
+      </div>
 
-        <div class="form-row">
+      <!-- Panel Nota Biasa -->
+      <div id="panelNota">
+        <section class="form-section">
           <div class="form-group">
-            <label for="receiptNoInput">No. Nota / Faktur</label>
-            <input type="text" id="receiptNoInput" placeholder="NOTA-1001" autocomplete="off">
+            <label for="storeNameInput">Nama Toko / Usaha</label>
+            <input type="text" id="storeNameInput" placeholder="Contoh: TOKO MAKMUR SEJAHTERA" autocomplete="off">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="receiptNoInput">No. Nota / Faktur</label>
+              <input type="text" id="receiptNoInput" placeholder="NOTA-1001" autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label for="dateInput">Tanggal Transaksi</label>
+              <input type="date" id="dateInput">
+            </div>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <div class="section-title-row">
+            <h2>Daftar Barang</h2>
+            <button type="button" class="btn btn-sm btn-outline" id="addItemBtn">+ Tambah Barang</button>
+          </div>
+
+          <div class="items-table-container">
+            <table class="items-editor-table">
+              <thead>
+                <tr>
+                  <th style="width: 42%;">Nama Barang</th>
+                  <th style="width: 16%;">Qty</th>
+                  <th style="width: 28%;">Harga (Rp)</th>
+                  <th style="width: 14%; text-align: center;">Hapus</th>
+                </tr>
+              </thead>
+              <tbody id="itemsTableBody">
+                <!-- Baris barang dirender via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="editor-summary">
+            <span class="summary-label">Total Keseluruhan</span>
+            <span class="summary-value" id="formTotalDisplay">Rp 0</span>
+          </div>
+        </section>
+
+        <footer class="editor-footer">
+          <button type="button" class="btn btn-secondary" id="loadSampleBtn">Isi Contoh Data</button>
+          <button type="button" class="btn btn-secondary" id="resetBtn">Reset Form</button>
+        </footer>
+      </div>
+
+      <!-- Panel Kwitansi Sewa -->
+      <div id="panelSewa" style="display:none;">
+        <section class="form-section">
+          <div class="form-group">
+            <label for="sewaPenerimaInput">Nama Pengelola / Instansi Penerima</label>
+            <input type="text" id="sewaPenerimaInput" placeholder="Contoh: Unit Pasar Badung" autocomplete="off">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sewaNoInput">No. Kwitansi</label>
+              <input type="text" id="sewaNoInput" placeholder="KW-001" autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label for="sewaTanggalInput">Tanggal</label>
+              <input type="date" id="sewaTanggalInput">
+            </div>
           </div>
           <div class="form-group">
-            <label for="dateInput">Tanggal Transaksi</label>
-            <input type="date" id="dateInput">
+            <label for="sewaDariPihakInput">Diterima dari (Nama Penyewa)</label>
+            <input type="text" id="sewaDariPihakInput" placeholder="Contoh: PT. HADAY GROUP INDONESIA" autocomplete="off">
           </div>
-        </div>
-      </section>
+          <div class="form-group">
+            <label for="sewaJumlahInput">Jumlah Uang (Rp)</label>
+            <input type="number" id="sewaJumlahInput" placeholder="250000" min="0" step="1000">
+          </div>
+          <div class="form-group">
+            <label for="sewaKeteranganInput">Keterangan Pembayaran</label>
+            <textarea id="sewaKeteranganInput" rows="3" placeholder="Contoh: Sewa tempat untuk kegiatan promosi di Pasar Badung tgl 23 September 2026" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; font-size:13px; resize:vertical;"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sewaLokasiInput">Kota / Lokasi</label>
+              <input type="text" id="sewaLokasiInput" placeholder="Contoh: Denpasar" autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label for="sewaYangMenerimaInput">Jabatan Yang Menerima</label>
+              <input type="text" id="sewaYangMenerimaInput" placeholder="Contoh: Pengelola Pasar" autocomplete="off">
+            </div>
+          </div>
+        </section>
 
-      <section class="form-section">
-        <div class="section-title-row">
-          <h2>Daftar Barang</h2>
-          <button type="button" class="btn btn-sm btn-outline" id="addItemBtn">+ Tambah Barang</button>
-        </div>
+        <section class="form-section">
+          <div class="section-title-row">
+            <h2>Desain Kwitansi</h2>
+          </div>
+          <div class="template-buttons" style="flex-wrap: wrap; gap: 6px; margin-top: 8px;">
+            <button type="button" class="tpl-btn sewa-tpl-btn active" data-sewa-tpl="21">21. Klasik Resmi</button>
+            <button type="button" class="tpl-btn sewa-tpl-btn" data--sewa-tpl="22" data-sewa-tpl="22">22. Modern Bersih</button>
+            <button type="button" class="tpl-btn sewa-tpl-btn" data-sewa-tpl="23">23. Formal Korporat</button>
+            <button type="button" class="tpl-btn sewa-tpl-btn" data-sewa-tpl="24">24. Minimalis Aksen</button>
+            <button type="button" class="tpl-btn sewa-tpl-btn" data-sewa-tpl="25">25. Retro Vintage</button>
+          </div>
+        </section>
+      </div>
 
-        <div class="items-table-container">
-          <table class="items-editor-table">
-            <thead>
-              <tr>
-                <th style="width: 42%;">Nama Barang</th>
-                <th style="width: 16%;">Qty</th>
-                <th style="width: 28%;">Harga (Rp)</th>
-                <th style="width: 14%; text-align: center;">Hapus</th>
-              </tr>
-            </thead>
-            <tbody id="itemsTableBody">
-              <!-- Baris barang dirender via JS -->
-            </tbody>
-          </table>
-        </div>
-
-        <div class="editor-summary">
-          <span class="summary-label">Total Keseluruhan</span>
-          <span class="summary-value" id="formTotalDisplay">Rp 0</span>
-        </div>
-      </section>
-
-      <footer class="editor-footer">
-        <button type="button" class="btn btn-secondary" id="loadSampleBtn">Isi Contoh Data</button>
-        <button type="button" class="btn btn-secondary" id="resetBtn">Reset Form</button>
-      </footer>
     </aside>
 
     <!-- Panel Kanan: Live Preview & Switcher -->
@@ -111,6 +176,6 @@
   </div>
 
   <script src="html2canvas.min.js"></script>
-  <script src="app.js?v=6"></script>
+  <script src="app.js?v=7"></script>
 </body>
 </html>
